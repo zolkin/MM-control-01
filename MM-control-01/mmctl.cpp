@@ -162,7 +162,7 @@ void switch_extruder_withSensor(int new_extruder)
 
 	active_extruder = new_extruder;
 
-    if (isFilamentLoaded)
+    if (isFilamentLoaded || digitalRead(A1) == 1) // unload just in case
     {
         unload_filament_withSensor();
     }
@@ -171,9 +171,9 @@ void switch_extruder_withSensor(int new_extruder)
 
     shr16_set_led(2 << 2 * (4 - active_extruder));
 
-    if (!isFilamentLoaded)
+    if (!isFilamentLoaded && digitalRead(A1) == 0) // load only if both conditions true, we'll recieve retry in case nothing is done
     {
-            load_filament_withSensor();
+        load_filament_withSensor();
     }
 
 	shr16_set_led(0x000);

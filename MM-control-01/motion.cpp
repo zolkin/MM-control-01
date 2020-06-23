@@ -139,7 +139,6 @@ static void unload_to_finda()
 
         delayMicroseconds(delay);
         if (digitalRead(A1) == 0) _endstop_hit++;
-
     }
 }
 
